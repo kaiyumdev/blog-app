@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-useless-catch */
 import { Account, Client, ID } from "appwrite";
@@ -27,9 +28,29 @@ export class AuthService {
 
   async login({ email, password }) {
     try {
-      return await this.client.login(email, password);
+      return await this.account.createEmailSession(email, password);
     } catch (error) {
       throw error;
     }
+    return null;
+  }
+
+  async getCurrentUser() {
+    try {
+      return await this.account.get();
+    } catch (error) {
+      console.log("Appwrite serive :: getCurrentUser :: error", error);
+    }
+  }
+
+  async logout() {
+    try {
+      await this.account.deleteSessions();
+    } catch (error) {
+      console.log("Appwrite serive :: logout :: error", error);
+    }
   }
 }
+
+const authService = new AuthService();
+export default authService;
