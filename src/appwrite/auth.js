@@ -20,6 +20,7 @@ class AuthService {
       const userAccount = await this.account.create(email, password, name);
       if (userAccount) {
         //login another account
+        return this.login();
       }
     } catch (error) {
       throw error;
