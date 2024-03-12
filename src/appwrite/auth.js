@@ -1,10 +1,10 @@
 /* eslint-disable no-unreachable */
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-useless-catch */
+/* eslint-disable no-unused-vars */
 import { Account, Client, ID } from "appwrite";
 import conf from "../conf/conf";
 
-export class AuthService {
+class AuthService {
   client = new Client();
   account;
 
@@ -17,9 +17,9 @@ export class AuthService {
 
   async createAccount({ email, password, name }) {
     try {
-      const userAccount = await this.client.create(ID, email, password, name);
+      const userAccount = await this.account.create(email, password, name);
       if (userAccount) {
-        //implements another method
+        //login another account
       }
     } catch (error) {
       throw error;
@@ -32,7 +32,6 @@ export class AuthService {
     } catch (error) {
       throw error;
     }
-    return null;
   }
 
   async getCurrentUser() {
@@ -41,16 +40,14 @@ export class AuthService {
     } catch (error) {
       console.log("Appwrite serive :: getCurrentUser :: error", error);
     }
+    return null;
   }
 
   async logout() {
     try {
-      await this.account.deleteSessions();
+      await this.account.deleteSession();
     } catch (error) {
       console.log("Appwrite serive :: logout :: error", error);
     }
   }
 }
-
-const authService = new AuthService();
-export default authService;
