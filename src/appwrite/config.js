@@ -1,4 +1,4 @@
-import { Client, Databases, Query, Storage } from "appwrite";
+import { Client, Databases, ID, Query, Storage } from "appwrite";
 import conf from "../conf/conf";
 
 export class Service {
@@ -61,8 +61,8 @@ export class Service {
       );
     } catch (error) {
       console.log("Appwrite serive :: getPost :: error", error);
+      return false;
     }
-    return false;
   }
 
   async getPosts(queries = [Query.equal("status", "active")]) {
@@ -70,6 +70,30 @@ export class Service {
       return await this.databases.listDocuments(queries);
     } catch (error) {
       console.log("Appwrite serive :: getPosts :: error", error);
+      return false;
+    }
+  }
+
+  //file upload server
+  async fileUpload(file) {
+    try {
+      return await this.bucket.createFile(
+        conf.appwriteBucketId,
+        ID.unique(),
+        file
+      );
+    } catch (error) {
+      console.log("Appwrite serive :: uploadFile :: error", error);
+      return false;
+    }
+  }
+
+  async deleteFile(fileId) {
+    try {
+      return await this.bucket.deleteFile(conf.appwriteBucketId, fileId);
+    } catch (error) {
+      console.log("Appwrite serive :: uploadFile :: error", error);
+      return false;
     }
   }
 }
