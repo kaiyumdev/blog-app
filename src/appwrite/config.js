@@ -1,4 +1,4 @@
-import { Client, Databases, Storage } from "appwrite";
+import { Client, Databases, Query, Storage } from "appwrite";
 import conf from "../conf/conf";
 
 export class Service {
@@ -63,5 +63,13 @@ export class Service {
       console.log("Appwrite serive :: getPost :: error", error);
     }
     return false;
+  }
+
+  async getPosts(queries = [Query.equal("status", "active")]) {
+    try {
+      return await this.databases.listDocuments(queries);
+    } catch (error) {
+      console.log("Appwrite serive :: getPosts :: error", error);
+    }
   }
 }
