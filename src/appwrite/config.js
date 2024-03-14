@@ -9,8 +9,8 @@ export class Service {
     this.client
       .setEndpoint(conf.appwriteUrl)
       .setEndpoint(conf.appwriteProjectId);
-    this.databases = new new Databases(this.client)();
-    this.bucket = new Storage(this.client);
+    this.databases = new Databases();
+    this.bucket = new Storage();
   }
 
   async createPost({ title, slug, content, featuredImage, status, userId }) {
@@ -74,8 +74,8 @@ export class Service {
     }
   }
 
-  //file upload server
-  async fileUpload(file) {
+  //upload files
+  async uploadFiles(file) {
     try {
       return await this.bucket.createFile(
         conf.appwriteBucketId,
@@ -83,7 +83,7 @@ export class Service {
         file
       );
     } catch (error) {
-      console.log("Appwrite serive :: uploadFile :: error", error);
+      console.log("Appwrite serive :: getFile :: error", error);
       return false;
     }
   }
@@ -92,13 +92,9 @@ export class Service {
     try {
       return await this.bucket.deleteFile(conf.appwriteBucketId, fileId);
     } catch (error) {
-      console.log("Appwrite serive :: uploadFile :: error", error);
+      console.log("Appwrite serive :: deleteFile :: error", error);
       return false;
     }
-  }
-
-  getFilePreview(fileId) {
-    return this.bucket.getFilePreview(conf.appwriteBucketId, fileId);
   }
 }
 
