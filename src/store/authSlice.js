@@ -1,6 +1,6 @@
-/* eslint-disable no-unused-vars */
 import { createSlice } from "@reduxjs/toolkit";
 
+/* eslint-disable no-unused-vars */
 const initialState = {
   status: false,
   userData: null,
@@ -14,7 +14,7 @@ export const authSlice = createSlice({
       state.status = true;
       state.userData = action.payload.userData;
     },
-    logout: (state) => {
+    logout: (state, action) => {
       state.status = false;
       state.userData = null;
     },
