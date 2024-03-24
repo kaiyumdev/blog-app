@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import authService from "../appwrite/auth";
 import { login } from "../store/authSlice";
 import Logo from "./Logo";
+import Input from "./Input";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -51,6 +52,17 @@ const Signup = () => {
           </Link>
         </p>
         {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
+        <form onSubmit={handleSubmit(create)}>
+          <div className="space-y-5">
+            <Input
+              label="Full Name: "
+              placeholder="Enter your full name"
+              {...register("name", {
+                required: true,
+              })}
+            />
+          </div>
+        </form>
       </div>
     </div>
   );
