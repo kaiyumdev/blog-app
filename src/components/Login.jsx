@@ -20,13 +20,14 @@ const Login = () => {
         const userData = await authService.getCurrentUser();
         if (userData) {
           dispatch(authLogin(userData));
+          navigate("/");
         }
       }
     } catch (error) {
       setError(error.message);
     }
   };
-  return <div>Login</div>;
+  return <div></div>;
 };
 
 export default Login;
