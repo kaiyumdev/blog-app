@@ -7,6 +7,7 @@ import authService from "../appwrite/auth";
 import { login } from "../store/authSlice";
 import Logo from "./Logo";
 import Input from "./Input";
+import Button from "./Button";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -82,6 +83,9 @@ const Signup = () => {
                 required: true,
               })}
             />
+            <Button type="submit" className="w-full">
+              Create Account
+            </Button>
           </div>
         </form>
       </div>
