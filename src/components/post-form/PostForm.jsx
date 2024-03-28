@@ -19,11 +19,14 @@ const PostForm = ({ post }) => {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.user.userData);
 
-  const submit = (data) => {
+  const submit = async (data) => {
     if (post) {
       const file = data.image[0]
         ? appwriteService.uploadFiles(data.image[0])
         : null;
+      if (file) {
+        appwriteService.deleteFile(post.featuredImage);
+      }
     }
   };
   return <div>PostForm</div>;
