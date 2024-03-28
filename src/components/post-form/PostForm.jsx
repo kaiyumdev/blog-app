@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -48,6 +49,17 @@ const PostForm = ({ post }) => {
         }
       }
     }
+
+    const slugTransform = useCallback((value) => {
+      if (value && typeof value === "string")
+        return value
+          .trim()
+          .toLowerCase()
+          .replace(/[^a-zA-Z\d\s]+/g, "-")
+          .replace(/\s/g, "-");
+
+      return "";
+    }, []);
   };
   return <div>PostForm</div>;
 };
