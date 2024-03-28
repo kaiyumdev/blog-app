@@ -34,6 +34,19 @@ const PostForm = ({ post }) => {
       if (dbPost) {
         navigate(`/post/${dbPost.$id}}`);
       }
+    } else {
+      const file = await appwriteService.updatePost(data.image[0]);
+      if (file) {
+        const fileId = file.$id;
+        data.featuredImage = fileId;
+        const dbPost = await appwriteService.createPost({
+          ...data,
+          userId: userData.$id,
+        });
+        if (dbPost) {
+          navigate(`/post/${dbPost.$id}`);
+        }
+      }
     }
   };
   return <div>PostForm</div>;
