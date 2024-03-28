@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import appwriteService from "../../appwrite/config";
-import { Input } from "../index";
+import { Input, RTE } from "../index";
 
 const PostForm = ({ post }) => {
   const { register, handleSubmit, watch, setValue, control, getValues } =
@@ -95,6 +95,12 @@ const PostForm = ({ post }) => {
               shouldValidate: true,
             });
           }}
+        />
+        <RTE
+          label="Content :"
+          name="content"
+          control={control}
+          defaultValue={getValues("content")}
         />
       </div>
     </form>
