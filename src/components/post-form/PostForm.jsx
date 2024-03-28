@@ -103,6 +103,15 @@ const PostForm = ({ post }) => {
           defaultValue={getValues("content")}
         />
       </div>
+      <div className="w-1/3 px-2">
+        <Input
+          label="Featured Image :"
+          type="file"
+          className="mb-4"
+          accept="image/png, image/jpg, image/jpeg, image/gif"
+          {...register("image", { required: !post })}
+        />
+      </div>
     </form>
   );
 };
