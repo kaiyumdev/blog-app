@@ -6,16 +6,18 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import appwriteService from "../../appwrite/config";
+import { Input } from "../index";
 
 const PostForm = ({ post }) => {
-  const { register, handleSubmit, watch, setValue, control } = useForm({
-    defaultValues: {
-      title: post?.title || "",
-      slug: post?.slug || "",
-      content: post?.content || "",
-      status: post?.status || "active",
-    },
-  });
+  const { register, handleSubmit, watch, setValue, control, getValues } =
+    useForm({
+      defaultValues: {
+        title: post?.title || "",
+        slug: post?.slug || "",
+        content: post?.content || "",
+        status: post?.status || "active",
+      },
+    });
 
   const navigate = useNavigate();
   const userData = useSelector((state) => state.user.userData);
@@ -73,7 +75,18 @@ const PostForm = ({ post }) => {
       return () => subscription.unsubscribe();
     }, [watch, slugTransform, setValue]);
   };
-  return <div>PostForm</div>;
+  return (
+    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
+      <div className="w-2/3 px-2">
+        <Input
+          label="Title :"
+          placeholder="Title"
+          className="mb-4"
+          {...register("title", { required: true })}
+        />
+      </div>
+    </form>
+  );
 };
 
 export default PostForm;
