@@ -10,6 +10,7 @@ import Input from "./Input";
 import Select from "./Select";
 import Signup from "./Signup";
 import Login from "./Login";
+import PostForm from "../components/post-form/PostForm";
 
 export {
   Header,
@@ -23,4 +24,5 @@ export {
   Select,
   Signup,
   Login,
+  PostForm,
 };
