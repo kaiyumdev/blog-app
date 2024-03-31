@@ -11,9 +11,9 @@ const authSlice = createSlice({
   reducers: {
     login: (state, action) => {
       state.status = true;
-      state.userData = { ...action.payload };
+      state.userData = action.payload.userData;
     },
-    logout: (state, action) => {
+    logout: (state) => {
       state.status = false;
       state.userData = null;
     },
@@ -21,6 +21,5 @@ const authSlice = createSlice({
 });
 
 export const { login, logout } = authSlice.actions;
-export default authSlice.reducer;
 
-//You add the post slice in it
+export default authSlice.reducer;
