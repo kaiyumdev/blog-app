@@ -7,7 +7,7 @@ import Logo from "../Logo";
 import LogoutBtn from "./LogoutBtn";
 
 const Header = () => {
-  const authStatus = useSelector((state) => state.auth.status);
+  const authStatus = useSelector((state) => state?.auth?.status);
   const navigate = useNavigate();
   const navItems = [
     {
