@@ -1,18 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-/* eslint-disable no-unused-vars */
 const initialState = {
   status: false,
   userData: null,
 };
 
-export const authSlice = createSlice({
+const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     login: (state, action) => {
       state.status = true;
-      state.userData = action.payload.userData;
+      state.userData = { ...action.payload };
     },
     logout: (state, action) => {
       state.status = false;
@@ -22,5 +21,6 @@ export const authSlice = createSlice({
 });
 
 export const { login, logout } = authSlice.actions;
-
 export default authSlice.reducer;
+
+//You add the post slice in it

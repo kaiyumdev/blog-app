@@ -1,7 +1,7 @@
 import React from "react";
-import { Container, Button } from "../Components";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Button, Container } from "../components";
 
 function Home() {
   const status = useSelector((state) => state.auth.status);

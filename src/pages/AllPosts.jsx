@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Container, PostCard, Button, Loader } from "../Components";
 import appwriteService from "../appwrite/config";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Button, Container, Loader, PostCard } from "../components";
 
 function AllPosts() {
   const [posts, setPosts] = useState([]);

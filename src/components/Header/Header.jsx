@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { LogoutBtn, Container, Logo, Button } from "../index";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import hamburgerIcon from "/icon-hamburger.svg";
-import closeIcon from "/icon-close.svg";
+import hamburgerIcon from "/hamburgerIcon.svg";
+import closeIcon from "/closeIcon.svg";
 
 function Header() {
   const authStatus = useSelector((state) => state.auth.status);

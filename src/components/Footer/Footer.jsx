@@ -3,12 +3,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "../Logo";
 
-const commonLinkClass =
+const commonLinkclassName =
   "text-base font-medium text-white/60 text-xs hover:text-white/60";
 
 const FooterLink = ({ to, text }) => (
   <li className="mb-4">
-    <Link className={commonLinkClass} to={to}>
+    <Link className={commonLinkclassName} to={to}>
       {text}
     </Link>
   </li>

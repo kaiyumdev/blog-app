@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import appwriteService from "../appwrite/config";
-import { Button, Container } from "../Components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
-import MiniLoader from "../Components/MiniLoader";
 import authService from "../appwrite/auth.js";
+import { Button, Container } from "../components/index.js";
+import MiniLoader from "../components/MiniLoader.jsx";
 
 export default function Post() {
   const [post, setPost] = useState(null);
