@@ -2,20 +2,18 @@ import React, { useState } from "react";
 import authService from "../appwrite/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../store/authSlice";
+import { Button, Input, Logo } from "./index.js";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { Logo, Input, Button, Loader } from "./index";
 
 function Signup() {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const create = async (data) => {
     setError("");
-    setLoading(true);
     try {
       const userData = await authService.createAccount(data);
       if (userData) {
@@ -25,14 +23,13 @@ function Signup() {
       }
     } catch (error) {
       setError(error.message);
-    } finally {
-      setLoading(false);
     }
   };
+
   return (
-    <div className="flex items-center justify-center md:min-h-[80vh]">
+    <div className="flex items-center justify-center">
       <div
-        className={`mx-auto w-[85%] md:w-full md:max-w-[28rem] rounded-xl p-5 md:p-10 bg-customGray shadow-grayBorder`}
+        className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}
       >
         <div className="mb-2 flex justify-center">
           <span className="inline-block w-full max-w-[100px]">
@@ -42,11 +39,11 @@ function Signup() {
         <h2 className="text-center text-2xl font-bold leading-tight">
           Sign up to create account
         </h2>
-        <p className="mt-2 text-center text-base text-white/60">
+        <p className="mt-2 text-center text-base text-black/60">
           Already have an account?&nbsp;
           <Link
             to="/login"
-            className="font-medium text-white/80 hover:text-white transition-all duration-200 hover:underline"
+            className="font-medium text-primary transition-all duration-200 hover:underline"
           >
             Sign In
           </Link>
@@ -58,7 +55,6 @@ function Signup() {
             <Input
               label="Full Name: "
               placeholder="Enter your full name"
-              className="focus:border-solid focus:border-x-8 focus:border-customPink"
               {...register("name", {
                 required: true,
               })}
@@ -66,7 +62,6 @@ function Signup() {
             <Input
               label="Email: "
               placeholder="Enter your email"
-              className="focus:border-solid focus:border-x-8 focus:border-customPink"
               type="email"
               {...register("email", {
                 required: true,
@@ -80,25 +75,14 @@ function Signup() {
             <Input
               label="Password: "
               type="password"
-              className="focus:border-solid focus:border-x-8 focus:border-customPink"
               placeholder="Enter your password"
               {...register("password", {
                 required: true,
               })}
             />
-            {loading ? (
-              <div className="w-full grid place-items-center">
-                {" "}
-                <Loader></Loader>
-              </div>
-            ) : (
-              <Button
-                type="submit"
-                className="my-4 py-2 px-5 w-full text-white bg-customPink button-custom rounded-xl shadow-lg hover:bg-[#EFFF3A] hover:text-black duration-400 hover:cursor-pointer"
-              >
-                Create Account
-              </Button>
-            )}
+            <Button type="submit" className="w-full">
+              Create Account
+            </Button>
           </div>
         </form>
       </div>
