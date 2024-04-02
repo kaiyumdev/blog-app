@@ -37,7 +37,7 @@ export class AuthService {
 
   async login({ email, password }) {
     try {
-      return await this.account.createEmailSession(email, password);
+      return await this.account.createEmailPasswordSession(email, password);
     } catch (error) {
       throw error;
     }
@@ -60,17 +60,17 @@ export class AuthService {
       console.log("Appwrite serive :: logout :: error", error);
     }
   }
-  async getUserId() {
-    const user = await this.getCurrentUser();
-    return user ? user.$id : null;
-  }
-  async getUserName(userId) {
-    // console.log(userId);
-    // const user = await this.users.get('6');
-    console.log(user);
-    // console.log(user.name);
-    // return user ? user.name: null;
-  }
+  // async getUserId() {
+  //   const user = await this.getCurrentUser();
+  //   return user ? user.$id : null;
+  // }
+  // async getUserName(userId) {
+  //   // console.log(userId);
+  //   // const user = await this.users.get('6');
+  //   console.log(user);
+  //   // console.log(user.name);
+  //   // return user ? user.name: null;
+  // }
 }
 
 const authService = new AuthService();
