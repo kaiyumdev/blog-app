@@ -56,5 +56,5 @@ BlogApp is accessible on [Live Link](), providing a convenient platform for user
 
 ## 📞 Contact Information
 
-- **GitHub:** [ayushichoudhary-19](https://github.com/kaiyumdev)
-- **LinkedIn:** [Ayushi Choudhary](https://www.linkedin.com/in/kaiyumdev/)
+- **GitHub:** [Abdul Kaiyum Fahim](https://github.com/kaiyumdev)
+- **LinkedIn:** [Abdul Kaiyum Fahim](https://www.linkedin.com/in/kaiyumdev/)
