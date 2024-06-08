@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 
+//dynamic button
 export default function Button({
   children,
   type = "button",
