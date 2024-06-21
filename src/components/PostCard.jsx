@@ -1,48 +1,20 @@
-// /* eslint-disable react/prop-types */
-// import React from "react";
-// import appwriteService from "../appwrite/config";
-// import { Link } from "react-router-dom";
-
-// function PostCard({ $id, title, featuredImage }) {
-//   return (
-//     <Link to={`/post/${$id}`}>
-//       <div className="w-full bg-gray-100 rounded-xl p-4">
-//         <div className="w-full flex justify-center mb-4 h-[80%]">
-//           <img
-//             src={appwriteService.getFilePreview(featuredImage)}
-//             alt={title}
-//             className="w-full h-full object-cover"
-//           />
-//         </div>
-//         <h2 className="text-xl font-bold">{title}</h2>
-//       </div>
-//     </Link>
-//   );
-// }
-
-// export default PostCard;
-
+/* eslint-disable react/prop-types */
 import React from "react";
 import appwriteService from "../appwrite/config";
 import { Link } from "react-router-dom";
 
 function PostCard({ $id, title, featuredImage }) {
-  const imageUrl = featuredImage
-    ? appwriteService.getFilePreview(featuredImage)
-    : undefined;
-
-  // console.log($id, title, featuredImage);
   return (
-    <Link to={`/post/${$id}`} className="flex justify-center">
-      <div className="w-64 bg-bgColor rounded-xl p-3 border border-gray-400 ">
-        <div className="w-full justify-center items-center mb-4">
+    <Link to={`/post/${$id}`}>
+      <div className="w-full bg-gray-100 rounded-xl p-4">
+        <div className="w-full flex justify-center mb-4 h-[80%]">
           <img
-            src={imageUrl}
+            src={appwriteService.getFilePreview(featuredImage)}
             alt={title}
-            className="rounded-md aspect-[3/2] object-cover object-center"
+            className="w-full h-full object-cover"
           />
         </div>
-        <h2 className="text-lg font-semibold">{title}</h2>
+        <h2 className="text-xl font-bold">{title}</h2>
       </div>
     </Link>
   );
