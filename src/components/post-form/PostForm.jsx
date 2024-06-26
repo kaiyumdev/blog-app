@@ -1,10 +1,11 @@
-/* eslint-disable react/prop-types */
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Input, RTE, Select } from "..";
+import { Button, Input, RTE, Select } from "../index";
 import appwriteService from "../../appwrite/config";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addPost, updatePost } from "../../store/postSlice";
+import Resizer from "react-image-file-resizer";
 
 export default function PostForm({ post }) {
   const { register, handleSubmit, watch, setValue, control, getValues } =
@@ -14,18 +15,35 @@ export default function PostForm({ post }) {
         slug: post?.$id || "",
         content: post?.content || "",
         status: post?.status || "active",
-        author: post?.author || "Anonymous",
       },
     });
-
+  const [loader, setLoader] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
-
+  // console.log(userData);
+  // console.log(userData.$id);
   const submit = async (data) => {
     if (post) {
-      const file = data.image[0]
-        ? await appwriteService.uploadFile(data.image[0])
-        : null;
+      // const file = data.image[0]
+      //   ? await appwriteService.uploadFile(data.image[0])
+      //   : null;
+
+      const uploadedImg = data.image[0];
+      const resizedFile = await new Promise((resolve, reject) => {
+        Resizer.imageFileResizer(
+          uploadedImg,
+          8000,
+          8000,
+          "JPEG",
+          50,
+          0,
+          (resizedImage) => resolve(resizedImage),
+          "file"
+        );
+      });
+
+      const file = await appwriteService.uploadFile(resizedFile);
 
       if (file) {
         appwriteService.deleteFile(post.featuredImage);
@@ -37,10 +55,26 @@ export default function PostForm({ post }) {
       });
 
       if (dbPost) {
+        dispatch(updatePost(dbPost, userData.$id));
+        setLoader(false);
         navigate(`/post/${dbPost.$id}`);
       }
     } else {
-      const file = await appwriteService.uploadFile(data.image[0]);
+      const uploadedImg = data.image[0];
+      const resizedFile = await new Promise((resolve, reject) => {
+        Resizer.imageFileResizer(
+          uploadedImg,
+          8000,
+          8000,
+          "JPEG",
+          50,
+          0,
+          (resizedImage) => resolve(resizedImage),
+          "file"
+        );
+      });
+
+      const file = await appwriteService.uploadFile(resizedFile);
 
       if (file) {
         const fileId = file.$id;
@@ -49,8 +83,9 @@ export default function PostForm({ post }) {
           ...data,
           userId: userData.$id,
         });
-
         if (dbPost) {
+          dispatch(addPost(dbPost, userData.$id));
+          setLoader(false);
           navigate(`/post/${dbPost.$id}`);
         }
       }
@@ -74,13 +109,15 @@ export default function PostForm({ post }) {
         setValue("slug", slugTransform(value.title), { shouldValidate: true });
       }
     });
-
     return () => subscription.unsubscribe();
   }, [watch, slugTransform, setValue]);
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-      <div className="w-2/3 px-2">
+    <form
+      onSubmit={handleSubmit(submit)}
+      className="w-[90%] text-center flex flex-col md:flex-row items-center md:items-start gap-24 justify-center bg-bgColor rounded-xl p-2 sm:p-10 text-textColor min-h-[80vh] border border-gray-500 py-6 relative"
+    >
+      <div className="md:w-2/3 px-2 text-start">
         <Input
           label="Title :"
           placeholder="Title"
@@ -105,7 +142,7 @@ export default function PostForm({ post }) {
           defaultValue={getValues("content")}
         />
       </div>
-      <div className="w-1/3 px-2">
+      <div className="md:w-1/3 px-2 text-start">
         <Input
           label="Featured Image :"
           type="file"
@@ -125,15 +162,30 @@ export default function PostForm({ post }) {
         <Select
           options={["active", "inactive"]}
           label="Status"
-          className="mb-4"
+          className="mb-4 "
           {...register("status", { required: true })}
         />
-        <Button
-          type="submit"
-          bgColor={post ? "bg-green-500" : undefined}
-          className="w-full"
-        >
-          {post ? "Update" : "Submit"}
+        {loader ? (
+          <Button
+            type="submit"
+            bgColor={post ? "bg-green-500" : undefined}
+            className="w-full"
+          >
+            Processing...
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            bgColor={post ? "bg-green-500" : undefined}
+            className="w-full"
+            onClick={() => setLoader(true)}
+          >
+            {post ? "Update" : "Submit"}
+          </Button>
+        )}
+
+        <Button className="mt-5 block mx-auto w-full">
+          <Link to="/">Back</Link>
         </Button>
       </div>
     </form>

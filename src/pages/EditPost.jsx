@@ -1,31 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { Container, PostForm } from "../components";
-import appwriteService from "../appwrite/config";
-import { useNavigate, useParams } from "react-router-dom";
+import React from "react";
+import { PostForm } from "../components";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function EditPost() {
-  const [post, setPosts] = useState(null);
   const { slug } = useParams();
-  const navigate = useNavigate();
+  const posts = useSelector((state) => state.post.posts);
+  const postSlug = posts.find((post) => post.$id === slug);
+  // console.log(posta);
 
-  useEffect(() => {
-    if (slug) {
-      appwriteService.getPost(slug).then((post) => {
-        if (post) {
-          setPosts(post);
-        }
-      });
-    } else {
-      navigate("/");
-    }
-  }, [slug, navigate]);
-  return post ? (
-    <div className="py-8">
-      <Container>
-        <PostForm post={post} />
-      </Container>
+  return postSlug ? (
+    <>
+      <div className="py-8 w-full min-h-[80vh] text-center flex items-center justify-center bg-bgLight text-textColor">
+        <PostForm post={postSlug} />
+      </div>
+    </>
+  ) : (
+    <div className="w-full min-h-[80vh] text-center flex items-center justify-center bg-bgLight text-textColor">
+      <h1 className="text-2xl p-10 font-bold inline-block  transition duration-200">
+        No post found
+      </h1>
     </div>
-  ) : null;
+  );
 }
 
 export default EditPost;
