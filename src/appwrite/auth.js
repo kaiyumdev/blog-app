@@ -6,14 +6,14 @@ import { Client, Account, ID, Databases } from "appwrite";
 export class AuthService {
   client = new Client();
   account;
-  users;
+  // users;
 
   constructor() {
     this.client
       .setEndpoint(conf.appwriteUrl)
       .setProject(conf.appwriteProjectId);
     this.account = new Account(this.client);
-    this.users = new Databases(this.client);
+    // this.users = new Databases(this.client);
   }
 
   async createAccount({ email, password, name }) {
